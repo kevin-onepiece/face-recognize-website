@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>contact</title>
+  <script type="text/javascript" src="facepp_sdk/jquery.min.js"></script>
+  <script type="text/javascript" src="facepp_sdk/exif.js"></script>
+  <script type="text/javascript" src="facepp_sdk/facepp_sdk.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script type="text/javascript" src="common.js"></script>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <!-- <link rel="stylesheet" type="text/css" href="common.css"> -->
+  <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+	<div id="box-video">
+        <video src="video/back.mp4"  autoplay="autoplay" muted loop >浏览器不支持video标签</video>
+				<audio src="music/Deep East Music - Bygone Bumps (clip).mp3" autoplay="autoplay" loop ></audio>
+
+				<div class="container">
+			  	<div class="row clearfix">
+			  		<div class="col-md-12 column">
+			  			<nav class="navbar navbar-inverse" role="navigation">
+			  				<div class="navbar-header">
+			  					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			               <span class="sr-only">Toggle navigation</span>
+			               <span class="icon-bar"></span>
+			               <span class="icon-bar"></span>
+			               <span class="icon-bar"></span></button>
+			                <a class="navbar-brand" href="index.html">Kevin-onepiece</a>
+			  				</div>
+
+			  				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			  					<ul class="nav navbar-nav">
+			  						<li>
+			  							 <a href="detectFace.html">人脸检测</a>
+			  						</li>
+			  						<li>
+			  							 <a href="compareFace.html">人脸比对</a>
+			  						</li>
+			              <!-- <li>
+			  							 <a href="searchFace.html">人脸搜索</a>
+			  						</li> -->
+			              <li>
+			  							 <a href="beautyFace.html">图片美化</a>
+			  						</li>
+			              <li>
+			  							 <a href="skeletonDetect.html">人体关键点</a>
+			  						</li>
+			              <li>
+			  							 <a href="segment.html">人体抠像</a>
+			  						</li>
+			              <li>
+			  							 <a href="gestureRecognize.html">手势识别</a>
+			  						</li>
+			              <li>
+			  							 <a href="mergeFace.html">人脸融合</a>
+			  						</li>
+			  						<li class="dropdown">
+			  							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">证件识别<strong class="caret"></strong></a>
+			  							<ul class="dropdown-menu">
+			  								<li>
+			  									 <a href="ocr_idcard.html">身份证识别</a>
+			  								</li>
+			  								<li>
+			  									 <a href="ocr_driverlicense.html">驾驶证识别</a>
+			  								</li>
+			  								<li>
+			  									 <a href="ocr_bankcard.html">银行卡识别</a>
+			  								</li>
+			  								<li class="divider">
+			  								</li>
+			  								<li>
+				  									 <a href="ocr_licenseplate.html">车牌识别</a>
+			  								</li>
+			  								<li class="divider">
+			  								</li>
+
+			  							</ul>
+			  						</li>
+			              <li>
+			  							 <a href="test.html">CONTACT ME</a>
+			  						</li>
+			  					</ul>
+			  				</div>
+
+			  			</nav>
+
+
+			  		</div>
+			  	</div>
+				</div>
+				<div id="form">
+					<form action="#" method="get" autocomplete="off">
+	    <h2>CONTACT ME</h2>
+	    <div class="form_div"><input type="text" name="name"  class="username" placeholder="Name..." required autofocus /></div>
+			<div class="form_div"><input type="text" name="email" class="username" placeholder="Email..." required /></div>
+			<div class="form_div"><input type="text" name="phone" class="username" placeholder="Phone..." /></div>
+			<div class="form_div"><input type="textarea" name="comments" class="comments" placeholder="Comments..." required /></div>
+			<!-- <input type="submit" name="submit" class="submit" value="SEND"> -->
+			<!-- <input type="submit" class="submit" style="background-color: #7ED321;" value="Send Message" ></input> -->
+			<div><input type="submit" class="but btn-primary submit" value="Send Message" ></input></div>
+
+
+		</form>
+
+				</div>
+
+</div>
+</body>
+</html>

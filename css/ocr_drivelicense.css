@@ -1,0 +1,45 @@
+#input{
+    opacity: 0;
+}
+
+#preview{
+    left: 10%;
+    max-width: 90%;
+}
+
+#text{
+    left: 10%;
+    top: 20px;
+    width: 90%;
+}
+
+#leftbutton{
+    margin-left: unset;
+    margin-right: 2%;
+    width: 40%;
+    display: inline-block;
+    top: 200px;
+}
+.container{
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    background-color: white;
+}
+
+.button{
+    position: relative;
+    top: 360px;
+    font-size: 16px;
+    width: 90%;
+    height: 40px;
+    line-height: 40px;
+    display: block;
+    margin-left: 5%;
+    text-align: center;
+    border-style: solid;
+    border-color: white;
+    border-width: 5px;
+    background-color: cornflowerblue;
+}

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>人脸融合</title>
+    <script type="text/javascript" src="facepp_sdk/jquery.min.js"></script>
+    <script type="text/javascript" src="facepp_sdk/exif.js"></script>
+    <script type="text/javascript" src="facepp_sdk/facepp_sdk.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <!-- <script type="text/javascript" src="common.js"></script> -->
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <!-- <link rel="stylesheet" type="text/css" href="common.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/mergeFace.css">
+
+</head>
+
+
+
+<body>
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+      <nav class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-header">
+           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+             <span class="sr-only">Toggle navigation</span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span></button>
+              <a class="navbar-brand" href="index.html">Kevin-onepiece</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li>
+               <a href="detectFace.html">人脸检测</a>
+            </li>
+            <li>
+               <a href="compareFace.html">人脸比对</a>
+            </li>
+            <!-- <li>
+               <a href="searchFace.html">人脸搜索</a>
+            </li> -->
+            <li>
+               <a href="beautyFace.html">图片美化</a>
+            </li>
+            <li>
+               <a href="skeletonDetect.html">人体关键点</a>
+            </li>
+            <!-- <li>
+               <a href="detectBody.html">人体检测</a>
+            </li> -->
+            <li>
+               <a href="segment.html">人体抠像</a>
+            </li>
+            <li>
+               <a href="gestureRecognize.html">手势识别</a>
+            </li>
+            <li>
+               <a href="mergeFace.html">人脸融合</a>
+            </li>
+            <li class="dropdown">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown">证件识别<strong class="caret"></strong></a>
+              <ul class="dropdown-menu">
+                <li>
+                   <a href="ocr_idcard.html">身份证识别</a>
+                </li>
+                <li>
+                   <a href="ocr_driverlicense.html">驾驶证识别</a>
+                </li>
+                <li>
+                   <a href="ocr_bankcard.html">银行卡识别</a>
+                </li>
+                <li class="divider">
+                </li>
+                <li>
+                   <a href="ocr_licenseplate.html">车牌识别</a>
+                </li>
+                <li class="divider">
+                </li>
+
+              </ul>
+            </li>
+            <li>
+               <a href="contact.html">CONTACT ME</a>
+            </li>
+          </ul>
+        </div>
+
+      </nav>
+
+      <hr class="featurette-divider">
+
+      <button type="button" class="btn btn-default btn-block" id="leftbutton" onclick=clickInput1()>选择融合图</button>
+      <img alt="问号" id="preview1" src="images/merge1.jpg" />
+       <button type="button" class="btn btn-default btn-block" id="rightbutton" onclick=clickInput2()>选择模板图</button>
+       <img alt="问号" id="preview2" src="images/merge2.jpg" />
+       <input id="input1" type="file" accept="image/*" onchange="selectImage1(this)"/>
+       <input id="input2" type="file" accept="image/*" onchange="selectImage2(this)"/>
+
+       <!-- <div id="result"></div> -->
+       <img id="resultImage" />
+       <!-- <p id="showresult"></p> -->
+      <!-- <textarea id="text" readonly="readonly"></textarea> -->
+      <hr class="featurette-divider">
+
+		</div>
+	</div>
+  <!-- FOOTER -->
+  <footer class="text-center">
+      <p>&copy; 2017-2018 江西kevin-onepiece科技有限公司 版权所有 &middot;
+          <a onclick="alert('\n由南昌大学组成的专业团队\n专注提供计算机视觉解决方案\n\nQQ:2495729320\nE-Mail:kevinfu2048@foxmail.com')">E-Mail:kevinfu2048@foxmail.com</a>
+          <p class="license"><span>赣公网安备1101798783221号</span></p>
+      </p>
+  </footer>
+</div>
+
+</body>
+
+<script>
+    // resetContainer();
+    const APIKEY = 'qk3Yg31TJLwD9jJP5r3vDmq0P8icm_Sx';
+    const APISERET = 'RM4kHDOJ4bM0B-JB8Uh2Hsf7k1FmVKJ0';
+    //点击按钮
+    function clickInput1(){
+        document.getElementById('input1').click();
+    }
+
+    //点击按钮
+    function clickInput2(){
+        document.getElementById('input2').click();
+    }
+
+    this.facepp = new FACEPP(APIKEY,APISERET,1);
+
+</script>
+
+
+<script>
+
+    var merge_file;
+    var template_file;
+
+    // 选择照片
+    function selectImage1(input){
+        let imageView = document.getElementById('preview1');
+
+        const reader = new FileReader();
+
+        reader.readAsDataURL(input.files[0]);
+
+        reader.onload = function (e) {
+
+            //图片的base64数据
+            const base64Image = e.target.result;
+
+            imageView.src = base64Image;
+
+            // 以二进制的方式上传图片
+            // 将base64转为二进制
+            merge_file = facepp.dataURItoBlob(base64Image);
+
+            startMerge();
+        }
+    }
+
+    // 选择照片
+    function selectImage2(input){
+        let imageView = document.getElementById('preview2');
+
+        const reader = new FileReader();
+
+        reader.readAsDataURL(input.files[0]);
+
+        reader.onload = function (e) {
+
+            //图片的base64数据
+            const base64Image = e.target.result;
+
+            imageView.src = base64Image;
+
+            // 以二进制的方式上传图片
+            // 将base64转为二进制
+            template_file = facepp.dataURItoBlob(base64Image);
+
+            startMerge();
+        }
+    }
+
+
+    function startMerge() {
+
+        if(merge_file == null || template_file == null){
+            return;
+        }
+
+        var that = this;
+
+        const detectPara = {"image_file" : template_file}
+        this.facepp.detectFace(detectPara,function (res) {
+            //获取模板图人脸框的位置
+            const face_rectangle = res.faces[0].face_rectangle;
+
+            var faceY = face_rectangle.top;
+            var faceX = face_rectangle.left;
+            var faceW = face_rectangle.width;
+            var faceH = face_rectangle.height;
+
+            const rectangle =  faceY + "," + faceX + "," + faceW + "," + faceH;//按照格式,用','隔开
+
+
+            // console.log(rectangle);
+
+            const mergePara = {"template_file": template_file,"template_rectangle" : rectangle,"merge_file" : merge_file};
+
+            that.facepp.mergeFace(mergePara,handleSuccess,handleError);
+
+
+        },handleError)
+    }
+
+
+
+    //成功的回调
+    function handleSuccess(e) {
+        console.log(e);
+
+        const base64Image  = 'data:image/jpg;base64,' + e.result;
+
+        var resultImage = document.getElementById('resultImage');
+
+        resultImage.src = base64Image;
+
+        // let textView = document.getElementById('text');
+        // textView.innerText = '';
+    }
+
+    //失败的回调
+    function handleError(e){
+        console.log(e);
+        // let textView = document.getElementById('text');
+        // textView.innerText = JSON.stringify(e,null,"\t");
+    }
+</script>
+</html>

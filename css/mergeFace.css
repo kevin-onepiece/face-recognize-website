@@ -1,0 +1,63 @@
+
+    #leftbutton{
+        /* margin-left: unset; */
+        margin-right: 2%;
+        width: 40%;
+        display: inline-block;
+    }
+
+    #rightbutton{
+        margin-right: 2%;
+        width: 40%;
+        display: inline-block;
+    }
+
+    #input1{
+        opacity: 0;
+    }
+
+    #input2{
+        opacity: 0;
+    }
+
+    #preview1{
+        /* margin-left: unset; */
+        /* margin-right: 2%; */
+        width: 20%;
+        /* display: inline-block; */
+    }
+
+    #preview2{
+        /* margin-left: 2%; */
+        width: 20%;
+        /* display: inline-block; */
+    }
+
+    #resultImage{
+        margin-top: 30px;
+        left: 5%;
+        max-width: 80%;
+    }
+    .container{
+        position: relative;
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+        background-color: white;
+    }
+
+    .button{
+        position: relative;
+        top: 360px;
+        font-size: 16px;
+        width: 90%;
+        height: 40px;
+        line-height: 40px;
+        display: block;
+        margin-left: 5%;
+        text-align: center;
+        border-style: solid;
+        border-color: white;
+        border-width: 5px;
+        background-color: cornflowerblue;
+    }

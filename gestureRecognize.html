@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>手势识别</title>
+    <script type="text/javascript" src="facepp_sdk/jquery.min.js"></script>
+    <script type="text/javascript" src="facepp_sdk/exif.js"></script>
+    <script type="text/javascript" src="facepp_sdk/facepp_sdk.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <!-- <script type="text/javascript" src="common.js"></script> -->
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <!-- <link rel="stylesheet" type="text/css" href="common.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/gestureRecognize.css">
+
+</head>
+
+
+<body>
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+      <nav class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-header">
+           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+             <span class="sr-only">Toggle navigation</span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span></button>
+              <a class="navbar-brand" href="index.html">Kevin-onepiece</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li>
+               <a href="detectFace.html">人脸检测</a>
+            </li>
+            <li>
+               <a href="compareFace.html">人脸比对</a>
+            </li>
+            <!-- <li>
+               <a href="searchFace.html">人脸搜索</a>
+            </li> -->
+            <li>
+               <a href="beautyFace.html">图片美化</a>
+            </li>
+            <li>
+               <a href="skeletonDetect.html">人体关键点</a>
+            </li>
+            <!-- <li>
+               <a href="detectBody.html">人体检测</a>
+            </li> -->
+            <li>
+               <a href="segment.html">人体抠像</a>
+            </li>
+            <li>
+               <a href="gestureRecognize.html">手势识别</a>
+            </li>
+            <li>
+               <a href="mergeFace.html">人脸融合</a>
+            </li>
+            <li class="dropdown">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown">证件识别<strong class="caret"></strong></a>
+              <ul class="dropdown-menu">
+                <li>
+                   <a href="ocr_idcard.html">身份证识别</a>
+                </li>
+                <li>
+                   <a href="ocr_driverlicense.html">驾驶证识别</a>
+                </li>
+                <li>
+                   <a href="ocr_bankcard.html">银行卡识别</a>
+                </li>
+                <li class="divider">
+                </li>
+                <li>
+                   <a href="ocr_licenseplate.html">车牌识别</a>
+                </li>
+                <li class="divider">
+                </li>
+
+              </ul>
+            </li>
+            <li>
+               <a href="contact.html">CONTACT ME</a>
+            </li>
+          </ul>
+        </div>
+
+      </nav>
+
+      <hr class="featurette-divider">
+
+      <button type="leftbutton" class="btn btn-default btn-block" id="leftbutton" onclick=clickInput()>选择手势照片</button>
+      <input id="input" type="file" accept="image/*" onchange="selectImage(this)"/>
+      <img alt="问号" id="preview" src="images/gesture.jpg" />
+
+      <div id="text"></div>
+      <table class="table text-center" id="table">
+      	<!-- <tbody>
+      		<tr class="active">
+      			<td>已检测到2个</td>
+      		</tr>
+      		<tr class="success">
+      			<td>第一个手势construction</td>
+      		</tr>
+      		<tr  class="warning">
+      			<td>第二个手势</td>
+      		</tr>
+      	</tbody> -->
+      </table>
+
+       <hr class="featurette-divider">
+
+       <!-- <p id="showresult"></p>
+      <textarea id="text" readonly="readonly"></textarea> -->
+		</div>
+	</div>
+  <!-- FOOTER -->
+  <footer class="text-center">
+      <p>&copy; 2017-2018 江西kevin-onepiece科技有限公司 版权所有 &middot;
+          <a onclick="alert('\n由南昌大学组成的专业团队\n专注提供计算机视觉解决方案\n\nQQ:2495729320\nE-Mail:kevinfu2048@foxmail.com')">E-Mail:kevinfu2048@foxmail.com</a>
+          <p class="license"><span>赣公网安备1101798783221号</span></p>
+      </p>
+  </footer>
+</div>
+</body>
+
+<script>
+    // resetContainer();
+    const APIKEY = 'qk3Yg31TJLwD9jJP5r3vDmq0P8icm_Sx';
+    const APISERET = 'RM4kHDOJ4bM0B-JB8Uh2Hsf7k1FmVKJ0';
+
+    //点击按钮
+    function clickInput(){
+        document.getElementById('input').click();
+    }
+
+    this.facepp = new FACEPP(APIKEY,APISERET,1);
+
+</script>
+
+
+<script>
+
+    // 选择照片
+    function selectImage(input){
+
+        let imageView = document.getElementById('preview');
+
+        const reader = new FileReader();
+
+        reader.readAsDataURL(input.files[0]);
+
+        reader.onload = function (e) {
+
+            //清除之前的文字
+            let textView = document.getElementById('text');
+            textView.innerText = '';
+
+            //图片的base64数据
+            const base64Image = e.target.result;
+
+            imageView.src = base64Image;
+
+            /*
+            //base64方式上传图片
+            let dic = {'image_base64' : base64Image};
+
+            facepp.detectFace(dic,success,failed);
+
+            */
+
+            // 以二进制的方式上传图片
+            // 将base64转为二进制
+            let imageData = facepp.dataURItoBlob(base64Image);
+
+            //上传图片,获取结果
+            let dataDic = {'image_file':imageData};
+
+            facepp.gestureRecognize(dataDic,handleSuccess,handleResult);
+        }
+    }
+
+    function handleSuccess(e) {
+
+        let textView = document.getElementById('text');
+
+        // console.log(e);
+
+        var hands = e.hands;
+
+        // console.log('hands' + hands);
+
+        // var result = '';
+
+        // for (var index in hands) {
+        //     var gesture = hands[index].gesture;
+        //     var maxkey = getMaxKey(gesture);
+        //     var maxValue = getValue(maxkey);
+        //     var confidence = gesture[maxkey];
+        //
+        //     var temp = parseInt(index) + 1;
+        //     result += '\n第'+  temp + '个手势最可能是: ' + maxValue + '，概率是: ' + confidence +'%';
+        // }
+
+        if (hands.length == 1){
+          var gesture = hands[0].gesture;
+          var maxkey = getMaxKey(gesture);
+          var maxValue = getValue(maxkey);
+          var confidence = gesture[maxkey];
+          var result = '第1个手势最可能是: ' + maxValue + '，概率是: ' + confidence +'%';
+
+          var tableData = "";
+          tableData+="<tbody><tr class='active'><td>已检测到一个手势</td></tr>"
+          tableData+="<tr class='success'><td>"+result+"</td></tr></body>"
+          $("#table").html(tableData)
+        }
+        else if (hands.length == 2){
+          var gesture1 = hands[0].gesture;
+          var maxkey1 = getMaxKey(gesture1);
+          var maxValue1 = getValue(maxkey1);
+          var confidence1 = gesture1[maxkey1];
+          var result1 = '第1个手势最可能是: ' + maxValue1 + '，概率是: ' + confidence1 +'%';
+
+          var gesture2 = hands[1].gesture;
+          var maxkey2 = getMaxKey(gesture2);
+          var maxValue2 = getValue(maxkey2);
+          var confidence2 = gesture2[maxkey2];
+          var result2 = '第2个手势最可能是: ' + maxValue2 + '，概率是: ' + confidence2 +'%';
+
+          var tableData = "";
+          tableData+="<tbody><tr class='active'><td>已检测到两个手势</td></tr>"
+          tableData+="<tr class='success'><td>"+result1+"</td></tr>"
+          tableData+="<tr class='success'><td>"+result2+"</td></tr></body>"
+          $("#table").html(tableData)
+        }
+        else{
+          var tableData = "";
+          tableData+="<tbody><tr class='active'><td>超过两个不检测，太累</td></tr></body>"
+          $("#table").html(tableData)
+        }
+
+        textView.innerText = result;
+    }
+
+    //失败的回调
+    function handleResult(e){
+        console.log(e);
+        let textView = document.getElementById('text');
+        textView.innerText = JSON.stringify(e,null,"\t");
+    }
+
+    //获取置信度最高的手势的Key
+    function getMaxKey(obj) {
+        // console.log(obj);
+        var maxKey;
+        var maxValue = 0;
+
+        for (const key in obj) {
+            const value = obj[key];
+            if (value > maxValue){
+                maxKey = key;
+                maxValue = value;
+            }
+        }
+        // console.log(maxKey);
+        return maxKey;
+    }
+
+    function getValue(key) {
+        const dic = {
+            'unknown': '未定义手势',
+            'heart_a': '比心 A',
+            'heart_b': '比心 B',
+            'heart_c': '比心 C',
+            'heart_d': '比心 D',
+            'ok': 'OK',
+            'hand_open': '手张开',
+            'thumb_up': '大拇指向上',
+            'thumb_down': '大拇指向下',
+            'rock': 'ROCK',
+            'namaste': '合十',
+            'palm_up': '手心向上',
+            'fist': '握拳',
+            'index_finger_up': '食指朝上',
+            'double_finger_up': '双指朝上',
+            'victory': '胜利',
+            'big_v': '大 V 字',
+            'phonecall': '打电话',
+            'beg': '作揖',
+            'thanks': '感谢'
+        }
+
+        return dic[key];
+    }
+
+</script>
+</html>
