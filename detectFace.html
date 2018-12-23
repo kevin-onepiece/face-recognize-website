@@ -21,6 +21,7 @@
   <div class="container">
   	<div class="row clearfix">
   		<div class="col-md-12 column">
+        <!-- 导航 -->
   			<nav class="navbar navbar-inverse" role="navigation">
   				<div class="navbar-header">
   					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -86,8 +87,6 @@
   				</div>
 
   			</nav>
-
-
   		</div>
   	</div>
     <!-- START THE FEATURETTES -->
@@ -95,18 +94,18 @@
 
      <hr class="featurette-divider">
 
-     <!-- <div id="leftbutton" onclick=clickInput()>选择照片</div> -->
+     <!-- 按钮 -->
      <button class="btn btn-default btn-block" id="leftbutton" onclick=clickInput()>选择人脸检测照片</button>
-
-     <!-- <button type="button" class="btn btn-default" onclick=clickInput()>选择照片</button> -->
 
      <input id="input" type="file" accept="image/*" name="xaunz" onchange="selectImage(this)"/>
 
+      <!-- 图片容器 -->
      <div id="facesContainer">
          <img id="preview" src="images/detectFace.jpg"/>
      </div>
 
-<table class="table">
+    <!-- 人脸信息表格 -->
+    <table class="table">
 	<caption>人脸信息表格</caption>
 
 	<tbody>
@@ -138,8 +137,6 @@
 	</tbody>
 </table>
 
-
-
      <!-- FOOTER -->
      <footer class="text-center">
          <p>&copy; 2017-2018 江西kevin-onepiece科技有限公司 版权所有 &middot;
@@ -154,8 +151,6 @@
 </html>
 
 <script>
-    // resetContainer();
-
     //点击选择图片
     function clickInput(){
          document.getElementById('input').click();
@@ -163,18 +158,10 @@
 </script>
 
 <script>
-const APIKEY = 'qk3Yg31TJLwD9jJP5r3vDmq0P8icm_Sx';
-const APISERET = 'RM4kHDOJ4bM0B-JB8Uh2Hsf7k1FmVKJ0';
+    // face++api
+    const APIKEY = 'qk3Yg31TJLwD9jJP5r3vDmq0P8icm_Sx';
+    const APISERET = 'RM4kHDOJ4bM0B-JB8Uh2Hsf7k1FmVKJ0';
     var facepp = new FACEPP(APIKEY,APISERET,1);
-
-    /*
-
-    // 以图片URL的方式上传图片
-    let dic = {'image_url' : 'https://www.faceplusplus.com.cn/scripts/demoScript/images/demo-pic6.jpg'};
-
-    facepp.detectFace(dic,success,failed);
-
-    */
 
     // 选择照片
     function selectImage(input){
@@ -215,15 +202,9 @@ const APISERET = 'RM4kHDOJ4bM0B-JB8Uh2Hsf7k1FmVKJ0';
     function success(e){
         //显示结果
         console.log(e);
-        // let textView = document.getElementById('showold');
-        // textView.innerText = JSON.stringify(e);
 
         // 画上人脸框,男女颜色不一样
         let imageView = document.getElementById('preview');
-
-        //展示年龄
-        // let old = document.getElementById('showold');
-        // old.innerHTML = e.faces[0].face_token;
 
         const faces = e.faces;
 
@@ -233,10 +214,6 @@ const APISERET = 'RM4kHDOJ4bM0B-JB8Uh2Hsf7k1FmVKJ0';
 
             //脸部旋转角度
             var roll = face.attributes.headpose.roll_angle;
-
-            //性别
-            // var gender = face.attributes.gender.value;
-
 
             // //展示各种信息
             let gender = document.getElementById('p6');
@@ -250,7 +227,6 @@ const APISERET = 'RM4kHDOJ4bM0B-JB8Uh2Hsf7k1FmVKJ0';
             race.innerHTML = face.attributes.ethnicity.value;
             beauty.innerHTML = face.attributes.beauty.female_score;
 
-              // emotion.innerHTML = face.attributes.emotion.neutral;
             //判断是哪种表情
             let anger = face.attributes.emotion.anger;
             let disgust = face.attributes.emotion.fear;
@@ -308,9 +284,6 @@ const APISERET = 'RM4kHDOJ4bM0B-JB8Uh2Hsf7k1FmVKJ0';
             var naturalWidth = imageView.naturalWidth;
             var naturalHeight = imageView.naturalHeight;
 
-            // console.log('container尺寸' + width + '----' +  height);
-            // console.log('img尺寸' + imageW + '----' + imageH);
-            // console.log('图片实际尺寸' + naturalWidth + '----' + imageH);
 
             const scale = imageW / naturalWidth;
 
@@ -338,8 +311,6 @@ const APISERET = 'RM4kHDOJ4bM0B-JB8Uh2Hsf7k1FmVKJ0';
     //失败的回调
     function failed(e){
         console.log(e);
-        let textView = document.getElementById('text');
-        textView.innerText = JSON.stringify(e);
     }
 
     //图片方向矫正
