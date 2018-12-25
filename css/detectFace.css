@@ -36,7 +36,7 @@ table{
 }
 
 #leftbutton{
-    margin-left: unset;
+    /* margin-left: unset; */
     margin-right: 2%;
     width: 40%;
     display: inline-block;
